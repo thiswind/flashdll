@@ -78,6 +78,10 @@ package org.flashdll {
 			return this.currentSpeed;
 		}
 		
+		public function getVersion() :String {
+			return "0.4.0";
+		}
+		
 		protected function process() :void {
 			this.currentDLL = this.dlls.shift();
 			//trace ("process:" + this.currentDLL);
