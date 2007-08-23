@@ -184,7 +184,7 @@ package org.flashdll {
 		
 		public function setDisplayName(displayName:String):void {
 			this.displayNamelabel.text = displayName;
-			this.displayNamelabel.width = this.displayNamelabel.textWidth + 6;
+			this.displayNamelabel.width = this.displayNamelabel.textWidth + 30;
 			this.displayNamelabel.setTextFormat(this.captionFormat);
 		}
 		
