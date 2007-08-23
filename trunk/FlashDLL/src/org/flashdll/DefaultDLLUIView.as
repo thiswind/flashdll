@@ -8,19 +8,15 @@ package org.flashdll {
 	import flash.text.TextFormat;
 	
 	public class DefaultDLLUIView extends Sprite implements DLLLoaderUIView {		
-		public function DefaultDLLUIView() {
-			super();
-			
-			this.visible = false;
-			this.addEventListener(Event.ADDED_TO_STAGE, this.init);
-		}
 		
-		private static const FORMAT_BOLD_12:TextFormat = new TextFormat(null, 12, 0x666666, true);
-		private static const FORMAT_10:TextFormat = new TextFormat(null, 10, 0x666666);
-		private static const FORMAT_8:TextFormat = new TextFormat(null, 8, 0x666666);
+		private static const FORMAT_BOLD_12:TextFormat = new TextFormat("_sans", 12, 0x666666, true);
+		private static const FORMAT_10:TextFormat = new TextFormat("_sans", 10, 0x666666);
+		private static const FORMAT_8:TextFormat = new TextFormat("_sans", 8, 0x666666);
 		
 		private var labelFormat:TextFormat = DefaultDLLUIView.FORMAT_10;
 		private var captionFormat:TextFormat = DefaultDLLUIView.FORMAT_BOLD_12;
+		
+		private var group:Sprite;
 		
 		private var progressBar:Shape;
 		private var speedLabel:TextField;
@@ -31,16 +27,29 @@ package org.flashdll {
 		private var dllProgressBar:Shape;
 		private var dllPercentLabel:TextField;
 		
-		private function init(e:Event) :void {
+		public function DefaultDLLUIView() {
+			super();
+			
+			this.visible = false;
+			this.createUI();
+			this.addEventListener(Event.RENDER, this.init);
+		}
+		
+		private function createUI() :void {
 			var g:Graphics = null;
+			
+			this.group = new Sprite();
+			
+			var c:Sprite = this.group;
 			
 			var backgroundShadow:Shape = new Shape();
 			g = backgroundShadow.graphics;
 			g.beginFill(0x666666);
 			g.drawRect(0, 0, 370, 154);
 			g.endFill();
-			this.center(backgroundShadow, 4, 5);
-			this.addChild(backgroundShadow);
+			backgroundShadow.x = 4;
+			backgroundShadow.y = 5;
+			c.addChild(backgroundShadow);
 			
 			var background:Shape = new Shape();
 			g = background.graphics;
@@ -48,8 +57,7 @@ package org.flashdll {
 			g.beginFill(0xFFFFFF);
 			g.drawRect(0, 0, 370, 154);
 			g.endFill();
-			this.center(background);
-			this.addChild(background);
+			c.addChild(background);
 			
 			var progressBarShadow:Shape = new Shape();
 			g = progressBarShadow.graphics;
@@ -57,8 +65,9 @@ package org.flashdll {
 			g.moveTo(0, 0);
 			g.lineTo(300, 0);
 			g.endFill();
-			this.center(progressBarShadow, 0, -24);
-			this.addChild(progressBarShadow);
+			progressBarShadow.x = 35;
+			progressBarShadow.y = 60;
+			c.addChild(progressBarShadow);
 			
 			this.progressBar = new Shape();
 			g = this.progressBar.graphics;
@@ -66,31 +75,37 @@ package org.flashdll {
 			g.moveTo(0, 0);
 			g.lineTo(300, 0);
 			g.endFill();
-			this.center(this.progressBar, 0, -25);
+			this.progressBar.x = 35;
+			this.progressBar.y = 60;
+			c.addChild(this.progressBar);
 			this.progressBar.scaleX = 0.0;
-			this.addChild(this.progressBar);
 			
 			this.speedLabel = new TextField();
 			this.speedLabel.selectable = false;
-			this.center(this.speedLabel, -150, -20, true, true);
-			this.addChild(this.speedLabel);
+			this.speedLabel.x = 35;
+			this.speedLabel.y = 60;
+			c.addChild(this.speedLabel);
 			this.setSpeed("no speed");
 			
 			this.displayNamelabel = new TextField();
 			this.displayNamelabel.selectable = false;
-			this.addChild(this.displayNamelabel);
+			this.displayNamelabel.x = 35;
+			this.displayNamelabel.y = 33;
+			c.addChild(this.displayNamelabel);
 			this.setDisplayName("Please wait...");
 			
 			this.percentLabel = new TextField();
 			this.percentLabel.selectable = false;
-			this.center(this.percentLabel, 120, -20, true, true);
-			this.addChild(this.percentLabel);
+			this.percentLabel.x = 305;
+			this.percentLabel.y = 60;
+			c.addChild(this.percentLabel);
 			this.setLoadingProgressBar(0, 100);
 			
 			this.statusLabel = new TextField();
 			this.statusLabel.selectable = false;
-			this.center(this.statusLabel, -176, 60, true, true);
-			this.addChild(this.statusLabel);
+			this.statusLabel.x = 4;
+			this.statusLabel.y = 136;
+			c.addChild(this.statusLabel);
 			this.setStatus("Initializing...");
 			
 			var dllProgressBarShadow:Shape = new Shape();
@@ -99,8 +114,9 @@ package org.flashdll {
 			g.moveTo(0, 0);
 			g.lineTo(300, 0);
 			g.endFill();
-			this.center(dllProgressBarShadow, 0, 31);
-			this.addChild(dllProgressBarShadow);
+			dllProgressBarShadow.x = 35;
+			dllProgressBarShadow.y = 102;
+			c.addChild(dllProgressBarShadow);
 			
 			this.dllProgressBar = new Shape();
 			g = this.dllProgressBar.graphics;
@@ -108,17 +124,29 @@ package org.flashdll {
 			g.moveTo(0, 0);
 			g.lineTo(300, 0);
 			g.endFill();
-			this.center(this.dllProgressBar, 0, 30);
+			this.dllProgressBar.x = 35;
+			this.dllProgressBar.y = 102;
+			c.addChild(this.dllProgressBar);
 			this.dllProgressBar.scaleX = 0.0;
-			this.addChild(this.dllProgressBar);
 			
 			this.dllPercentLabel = new TextField();
 			this.dllPercentLabel.selectable = false;
-			this.center(this.dllPercentLabel, 120, 34, true, true);
-			this.addChild(this.dllPercentLabel);
+			this.dllPercentLabel.x = 35;
+			this.dllPercentLabel.y = 102;
+			c.addChild(this.dllPercentLabel);
 			this.setDLLProgressBar(0, 0);
-			
+		}
+		
+		private function onAddToStage(e:Event) :void {
+			this.addChild(this.group);
+			trace ("add to Stage");
+		}
+		
+		private function init(e:Event) :void {
+			this.group.visible = false;
+			this.center(this.group);
 			this.visible = true;
+			trace ("render");
 		}
 		private function center(display:DisplayObject, xoffset:int=0.0, yoffset:int=0.0, noWidth:Boolean=false, noHeight:Boolean=false) :void {
 			var width:uint = display.width;
@@ -164,12 +192,10 @@ package org.flashdll {
 			this.displayNamelabel.text = displayName;
 			this.displayNamelabel.width = this.displayNamelabel.textWidth + 6;
 			this.displayNamelabel.setTextFormat(this.captionFormat);
-			this.center(this.displayNamelabel, 0, -48, false, true);
 		}
 		
 		public function setLoadingProgressBar(bytesLoaded:uint, bytesTotal:uint):void {			
 			var percent:Number = (bytesTotal == 0) ? 0 : (bytesLoaded / bytesTotal);
-			//trace (percent);
 			this.progressBar.scaleX = percent;
 			
 			this.percentLabel.text = Math.round(100 * percent) + "%";
@@ -180,7 +206,7 @@ package org.flashdll {
 		public function setSpeed(speed:String) :void {
 			this.speedLabel.text = speed;
 			this.speedLabel.width = this.speedLabel.textWidth + 6;
-			this.speedLabel.setTextFormat(this.labelFormat);//"Verdana"
+			this.speedLabel.setTextFormat(this.labelFormat);
 		}
 	}
 }
