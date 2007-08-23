@@ -72,8 +72,8 @@ package org.flashdll {
 		}
 		private function __onAllComplete(e:Event) :void {
 			//trace ("all complete");
-			this.owner.removeChild(this.view as DisplayObject);
-			this.view = null;
+			//this.owner.removeChild(this.view as DisplayObject);
+			//this.view = null;
 		}
 	}
 }
