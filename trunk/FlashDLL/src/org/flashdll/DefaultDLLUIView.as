@@ -30,8 +30,8 @@ package org.flashdll {
 		public function DefaultDLLUIView() {
 			super();
 			
-			this.visible = false;
 			this.createUI();
+			this.addEventListener(Event.ADDED_TO_STAGE, this.init);
 			this.addEventListener(Event.RENDER, this.init);
 		}
 		
@@ -137,15 +137,9 @@ package org.flashdll {
 			this.setDLLProgressBar(0, 0);
 		}
 		
-		private function onAddToStage(e:Event) :void {
-			this.addChild(this.group);
-			trace ("add to Stage");
-		}
-		
 		private function init(e:Event) :void {
-			this.group.visible = false;
+			this.addChild(this.group);
 			this.center(this.group);
-			this.visible = true;
 			trace ("render");
 		}
 		private function center(display:DisplayObject, xoffset:int=0.0, yoffset:int=0.0, noWidth:Boolean=false, noHeight:Boolean=false) :void {
