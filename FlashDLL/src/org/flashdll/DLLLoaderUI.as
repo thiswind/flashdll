@@ -39,8 +39,8 @@ package org.flashdll {
 		}
 		
 		private function __onOpen(e:Event) :void {
-			//trace ("view open");
 			this.view.setDisplayName(this.loader.getCurrentDisplayName());
+			this.view.setDLLProgressBar(this.loader.getDLLsLoaded(), this.loader.getDLLsTotal());
 			this.view.setStatus("Loading...");
 		}
 		
@@ -57,23 +57,19 @@ package org.flashdll {
 		}
 		
 		private function __onProgress(e:ProgressEvent) :void {
-			//trace ("view progress");
 			this.view.setLoadingProgressBar(e.bytesLoaded, e.bytesTotal);
 			this.view.setSpeed(Math.round(e.bytesLoaded/1024) + " (kb) of " + Math.round(e.bytesTotal/1024) + " (kb) at " + Math.round(this.loader.getcurrentSpeed()/1024 * 1000) + " (kb/s)");
 		}
 		private function __onComplete(e:Event) :void {
-			//trace ("view complete");
 			this.view.setStatus("Complete");
 			this.view.setDLLProgressBar(this.loader.getDLLsLoaded(), this.loader.getDLLsTotal());
 		}
 		private function __onInstall(e:Event) :void {
-			//trace ("initializing");
 			this.view.setStatus("Installing...");
 		}
 		private function __onAllComplete(e:Event) :void {
-			//trace ("all complete");
-			//this.owner.removeChild(this.view as DisplayObject);
-			//this.view = null;
+			this.owner.removeChild(this.view as DisplayObject);
+			this.view = null;
 		}
 	}
 }
