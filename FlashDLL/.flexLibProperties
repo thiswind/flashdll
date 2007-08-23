@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties version="1">
+<includeClasses>
+<classEntry path="org.flashdll.DLLLoader"/>
+<classEntry path="org.flashdll.DLLLoaderUI"/>
+<classEntry path="org.flashdll.DLLLoaderUIView"/>
+<classEntry path="org.flashdll.DefaultDLLUIView"/>
+</includeClasses>
+<includeResources/>
+<namespaceManifests/>
+</flexLibProperties>
