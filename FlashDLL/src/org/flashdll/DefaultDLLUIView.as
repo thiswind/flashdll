@@ -113,6 +113,7 @@ package org.flashdll {
 			this.addChild(this.dllProgressBar);
 			
 			this.dllPercentLabel = new TextField();
+			this.dllPercentLabel.selectable = false;
 			this.center(this.dllPercentLabel, 120, 34, true, true);
 			this.addChild(this.dllPercentLabel);
 			this.setDLLProgressBar(0, 0);

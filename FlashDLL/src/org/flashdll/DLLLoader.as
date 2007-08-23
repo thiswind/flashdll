@@ -11,6 +11,8 @@ package org.flashdll {
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
+	import flash.utils.Timer;
+	import flash.events.TimerEvent;
 	
 	[Event(name="install", type="org.flashdll.DLLLoader")]
 	[Event(name="allCompleted", type="org.flashdll.DLLLoader")]
@@ -34,6 +36,9 @@ package org.flashdll {
 		
 		private var startTime:Number;
 		private var currentSpeed:Number;
+		
+		private const MAX_FAULT_COUNT:int = 3;
+		private var faultCount:int = 0;
 			
 		public function DLLLoader(){
 			this.stream = new URLStream();
@@ -75,10 +80,10 @@ package org.flashdll {
 		
 		protected function process() :void {
 			this.currentDLL = this.dlls.shift();
-			trace ("process:" + this.currentDLL);
+			//trace ("process:" + this.currentDLL);
 			
 			if (this.currentDLL != null) {
-				this.loadStream();
+			    this.loadStream();
 			} else {
 				this.dispatchEvent(new Event(DLLLoader.ALL_COMPLETED));
 			}
@@ -102,11 +107,27 @@ package org.flashdll {
 		}
 		
 		private function onIOError(e:IOErrorEvent) :void {
-			this.dispatchEvent(e);
+		    this.faultCount++;
+		    
+		    if (this.faultCount > this.MAX_FAULT_COUNT) {
+		        this.dispatchEvent(e);
+		    } else {
+		        var timer:Timer = new Timer(500, 1);
+			    timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e:TimerEvent) :void {loadStream();});
+				timer.start();
+		    }
 		}
 		
 		private function onSecurityError(e:SecurityErrorEvent) :void {
-			this.dispatchEvent(e);
+			this.faultCount++;
+		    
+		    if (this.faultCount > this.MAX_FAULT_COUNT) {
+		        this.dispatchEvent(e);
+		    } else {
+		        var timer:Timer = new Timer(500, 1);
+			    timer.addEventListener(TimerEvent.TIMER_COMPLETE, function (e:TimerEvent) :void {loadStream();});
+				timer.start();
+		    }
 		}
 		
 		private function onHttpStatus(e:HTTPStatusEvent) :void {
