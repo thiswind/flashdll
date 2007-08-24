@@ -7,6 +7,10 @@ package org.flashdll {
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;	
 	
+	/**
+	 * DLLLoaderUI is a UI wrapper of DLLLoader
+	 * @author Hukuang
+	 */ 
 	public class DLLLoaderUI  {
 		
 		private var loader:DLLLoader;

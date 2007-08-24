@@ -7,7 +7,10 @@ package org.flashdll {
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
-	public class DefaultDLLUIView extends Sprite implements DLLLoaderUIView {		
+	/**
+	 * default DLLLoaderUIView
+	 */ 
+	public class DefaultDLLUIView extends DLLLoaderUIView {		
 		
 		private static const FORMAT_BOLD_12:TextFormat = new TextFormat("_sans", 12, 0x666666, true);
 		private static const FORMAT_10:TextFormat = new TextFormat("_sans", 10, 0x666666);
@@ -166,13 +169,13 @@ package org.flashdll {
 			display.y = cy;
 		}
 		
-		public function setStatus(status:String):void {
+		override public function setStatus(status:String):void {
 			this.statusLabel.text = status;
 			this.statusLabel.width = this.statusLabel.textWidth + 6;
 			this.statusLabel.setTextFormat(this.labelFormat);
 		}
 		
-		public function setDLLProgressBar(dllLoaded:uint, dllTotal:uint):void {
+		override public function setDLLProgressBar(dllLoaded:uint, dllTotal:uint):void {
 			var percent:Number = (dllTotal == 0) ? 0 : (dllLoaded / dllTotal);
 			
 			this.dllProgressBar.scaleX = percent;
@@ -182,13 +185,13 @@ package org.flashdll {
 			this.dllPercentLabel.setTextFormat(this.labelFormat);
 		}
 		
-		public function setDisplayName(displayName:String):void {
+		override public function setDisplayName(displayName:String):void {
 			this.displayNamelabel.text = displayName;
 			this.displayNamelabel.width = this.displayNamelabel.textWidth + 30;
 			this.displayNamelabel.setTextFormat(this.captionFormat);
 		}
 		
-		public function setLoadingProgressBar(bytesLoaded:uint, bytesTotal:uint):void {			
+		override public function setLoadingProgressBar(bytesLoaded:uint, bytesTotal:uint):void {			
 			var percent:Number = (bytesTotal == 0) ? 0 : (bytesLoaded / bytesTotal);
 			this.progressBar.scaleX = percent;
 			
@@ -197,7 +200,7 @@ package org.flashdll {
 			this.percentLabel.setTextFormat(this.labelFormat);
 		}
 		
-		public function setSpeed(speed:String) :void {
+		override public function setSpeed(speed:String) :void {
 			this.speedLabel.text = speed;
 			this.speedLabel.width = this.speedLabel.textWidth + 6;
 			this.speedLabel.setTextFormat(this.labelFormat);

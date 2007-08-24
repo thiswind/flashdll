@@ -14,13 +14,30 @@ package org.flashdll {
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
 	
+	/**
+	 * dispatch when a dll is installed into current domain
+	 */ 
 	[Event(name="install", type="org.flashdll.DLLLoader")]
+	
+	/**
+	 * dispatch when all dlls loaded and installed
+	 */ 
 	[Event(name="allCompleted", type="org.flashdll.DLLLoader")]
-	[Event(name="open", type="flash.events.Event")]
+	
+	[Event(name="open", type="flash.events.Event")]	
 	[Event(name="progress", type="flash.events.ProgressEvent")]
 	[Event(name="ioError", type="flash.events.IOErrorEvent")]
 	[Event(name="httpStatus", type="flash.events.HTTPStatusEvent")]
 	[Event(name="securityError", type="flash.events.SecurityErrorEvent")]
+	
+	/**
+	 * DLL loader will load the DLLs into current domain.
+	 * you should call addDll() to add dlls in to it's work queue,
+	 * and then, call notify(), the queue will be processed automatically.
+	 * after all the dlls loaded and installed, it will dispatch a "allCompleted" event
+	 * 
+	 * @author Hukuang
+	 */ 
 	public class DLLLoader extends EventDispatcher{
 		
 		public static const INSTALL:String = "install";
