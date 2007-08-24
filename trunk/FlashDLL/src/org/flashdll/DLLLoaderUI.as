@@ -1,5 +1,4 @@
 package org.flashdll {
-	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.HTTPStatusEvent;
@@ -39,7 +38,7 @@ package org.flashdll {
 			}
 			
 			this.view = view;
-			this.owner.addChild(DisplayObject(this.view));
+			this.owner.addChild(this.view);
 		}
 		
 		private function __onOpen(e:Event) :void {
@@ -72,7 +71,7 @@ package org.flashdll {
 			this.view.setStatus("Installing...");
 		}
 		private function __onAllComplete(e:Event) :void {
-			this.owner.removeChild(this.view as DisplayObject);
+			this.owner.removeChild(this.view);
 			this.view = null;
 		}
 	}
