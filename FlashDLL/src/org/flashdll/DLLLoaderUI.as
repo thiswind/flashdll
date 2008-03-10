@@ -41,6 +41,10 @@ package org.flashdll {
 			this.owner.addChild(this.view);
 		}
 		
+		public function getView():DLLLoaderUIView{
+			return view;
+		}
+		
 		private function __onOpen(e:Event) :void {
 			this.view.setDisplayName(this.loader.getCurrentDisplayName());
 			this.view.setDLLProgressBar(this.loader.getDLLsLoaded(), this.loader.getDLLsTotal());

@@ -1,4 +1,5 @@
 package org.flashdll {
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -6,13 +7,13 @@ package org.flashdll {
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
+	import flash.events.TimerEvent;
 	import flash.net.URLRequest;
 	import flash.net.URLStream;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
 	import flash.utils.Timer;
-	import flash.events.TimerEvent;
 	
 	/**
 	 * dispatch when a dll is installed into current domain
@@ -45,6 +46,7 @@ package org.flashdll {
 		
 		private var stream:URLStream;
 		private var loader:Loader;
+		private var root:DisplayObjectContainer;
 		
 		private var dlls:Array = new Array();
 		private var currentDLL:DLL;
@@ -57,7 +59,8 @@ package org.flashdll {
 		private const MAX_FAULT_COUNT:int = 3;
 		private var faultCount:int = 0;
 			
-		public function DLLLoader(){
+		public function DLLLoader(root:DisplayObjectContainer=null){
+			this.root = root;
 			this.stream = new URLStream();
 			this.stream.addEventListener(Event.OPEN, this.onOpen);
 			this.stream.addEventListener(ProgressEvent.PROGRESS, this.onProgress);
@@ -70,10 +73,16 @@ package org.flashdll {
 			this.loader.contentLoaderInfo.addEventListener(Event.COMPLETE, this.onLoaderComplete);
 		}
 		
-		public function addDLL(path:String, displayName:String) :void {
+		/**
+		 * @param path the dll swf path
+		 * @param path the dll name to display
+		 * @param path the method to be execute when this dll is loaded, a param root will be pass to this method
+		 */
+		public function addDLL(path:String, displayName:String, executeMethodName:String=null) :void {
 			var dll:DLL = new DLL();
 			dll.path = path;
 			dll.desplayName = displayName;
+			dll.executeMethodName = executeMethodName;
 			this.dlls.push(dll);
 			this.dllCount++;
 		}
@@ -185,7 +194,10 @@ package org.flashdll {
 			
 			this.dllLoadedCount++;
 			this.dispatchEvent(e);
-			
+			if(currentDLL.executeMethodName != null){
+				var content:* = this.loader.content;
+				content[currentDLL.executeMethodName](root);
+			}
 			//load next
 			this.process();
 		}
@@ -195,4 +207,5 @@ package org.flashdll {
 class DLL {
 	public var path:String;
 	public var desplayName:String;
+	public var executeMethodName:String;
 }
