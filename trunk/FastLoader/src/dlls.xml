@@ -1,0 +1,4 @@
+<DLLs>
+<DLL path="http://www.flashdll.org/AsWingDLL_1_1_0.swf" name="AsWing 1.1" />
+<DLL path="FastLoadDemoApp.swf" name="FastLoad Example" execute="main"/>
+</DLLs>
