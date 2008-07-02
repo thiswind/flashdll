@@ -38,6 +38,7 @@ package org.flashdll {
 	 * after all the dlls loaded and installed, it will dispatch a "allCompleted" event
 	 * 
 	 * @author Hukuang
+	 * @version 1.1
 	 */ 
 	public class DLLLoader extends EventDispatcher{
 		
@@ -105,7 +106,11 @@ package org.flashdll {
 		}
 		
 		public function getVersion() :String {
-			return "0.4";
+			return "1.1";
+		}
+		
+		protected function getLoader() :Loader {
+			return this.loader;
 		}
 		
 		protected function process() :void {
