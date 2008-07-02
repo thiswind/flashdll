@@ -14,7 +14,7 @@ package org.flashdll {
 		
 		private static const FORMAT_BOLD_12:TextFormat = new TextFormat("_sans", 12, 0x666666, true);
 		private static const FORMAT_10:TextFormat = new TextFormat("_sans", 10, 0x666666);
-		private static const FORMAT_8:TextFormat = new TextFormat("_sans", 8, 0x666666);
+		//private static const FORMAT_8:TextFormat = new TextFormat("_sans", 8, 0x666666);
 		
 		private var labelFormat:TextFormat = DefaultDLLUIView.FORMAT_10;
 		private var captionFormat:TextFormat = DefaultDLLUIView.FORMAT_BOLD_12;
