@@ -1,0 +1,1 @@
+More informations check http://www.flashdll.org and http://code.google.com/p/flashdll
